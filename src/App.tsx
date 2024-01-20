@@ -1,7 +1,5 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.css'
-import List from './page/List'
+import List from './page/manage/List'
 
 function App() {
   return (
