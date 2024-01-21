@@ -32,8 +32,40 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
+        path: 'manage',
+        element: <ManageLayout />,
+        children: [
+          {
+            path: 'list',
+            element: <List />,
+          },
+          {
+            path: 'star',
+            element: <Star />,
+          },
+          {
+            path: 'trash',
+            element: <Trash />,
+          },
+        ],
+      },
+      {
         path: '*',
         element: <NotFound />,
+      },
+    ],
+  },
+  {
+    path: 'question',
+    element: <QuestionLayout />,
+    children: [
+      {
+        path: 'edit/:id',
+        element: <Edit />,
+      },
+      {
+        path: 'stat/:id',
+        element: <Stat />,
       },
     ],
   },

@@ -16,7 +16,7 @@ const ManageLayout: FC = () => {
         <a>回收站</a>
       </div>
 
-      <div>
+      <div className={styles.right}>
         <Outlet />
       </div>
     </div>
