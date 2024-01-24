@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+// import { useSearchParams } from 'react-router-dom'
+import { useTitle } from 'ahooks'
 import QuestionCard from '../../components/QuestionCard'
 import styles from './List.module.scss'
 
@@ -38,9 +39,10 @@ const rawQuestionList = [
   },
 ]
 const List: FC = () => {
+  useTitle('XY问卷 - 我的问卷')
   const [questionList, setQuestionList] = useState(rawQuestionList)
-  const [searchParams] = useSearchParams()
-  console.log('keyword', searchParams.get('keyword'))
+  // const [searchParams] = useSearchParams()
+  // console.log('keyword', searchParams.get('keyword'))
   return (
     <>
       <div className={styles.header}>

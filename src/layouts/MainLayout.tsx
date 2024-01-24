@@ -1,15 +1,22 @@
 import React, { FC } from 'react'
 import { Outlet } from 'react-router-dom'
+import { Layout } from 'antd'
+import styles from './MainLayout.module.scss'
 
 const MainLayout: FC = () => {
+  const { Header, Footer, Sider, Content } = Layout
+
   return (
-    <>
-      <div>MainLayout header</div>
-      <div>
+    <Layout>
+      <Header className={styles.header}>
+        <div className={styles.left}>Logo</div>
+        <div className={styles.right}>登录</div>
+      </Header>
+      <Content className={styles.main}>
         <Outlet />
-      </div>
-      <div>MainLayout footer</div>
-    </>
+      </Content>
+      <Footer className={styles.footer}>XY问卷 &copy; 2024.Created by XY</Footer>
+    </Layout>
   )
 }
 export default MainLayout
