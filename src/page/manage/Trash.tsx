@@ -1,9 +1,8 @@
 import React, { FC, useState } from 'react'
 import { useTitle } from 'ahooks'
-import { Typography, Empty, Table, Tag } from 'antd'
+import { Typography, Empty, Table, Tag, Space, Button, Modal } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import styles from './common.module.scss'
-import { title } from 'process'
-import { render } from '@testing-library/react'
 
 const rawQuestionList = [
   {
@@ -32,10 +31,13 @@ const rawQuestionList = [
   },
 ]
 const { Title } = Typography
+const { confirm } = Modal
 
 const Trash: FC = () => {
   useTitle('XY问卷 - 回收站')
   const [questionList, setQuestionList] = useState(rawQuestionList)
+
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   const tableColumns = [
     {
@@ -57,6 +59,40 @@ const Trash: FC = () => {
       dataIndex: 'createdAt',
     },
   ]
+  function del() {
+    confirm({
+      title: '确认彻底删除该问卷?',
+      icon: <ExclamationCircleOutlined />,
+      content: '删除之后不可找回',
+    })
+  }
+  // 可以把 JSX 片段定义为变量
+  const TableElem = (
+    <>
+      <div style={{ marginBottom: '16px' }}>
+        <Space>
+          <Button type="primary" disabled={selectedIds.length === 0}>
+            恢复
+          </Button>
+          <Button danger disabled={selectedIds.length === 0} onClick={del}>
+            删除
+          </Button>
+        </Space>
+      </div>
+      <Table
+        dataSource={rawQuestionList}
+        columns={tableColumns}
+        rowKey={q => q._id}
+        rowSelection={{
+          type: 'checkbox',
+          onChange: selectRowKeys => {
+            console.log('selectRowKeys', selectRowKeys)
+            setSelectedIds(selectRowKeys as string[])
+          },
+        }}
+      />
+    </>
+  )
   return (
     <>
       <div className={styles.header}>
@@ -67,7 +103,7 @@ const Trash: FC = () => {
       </div>
       <div className={styles.content}>
         {questionList.length === 0 && <Empty description="暂无问卷" />}
-        {questionList.length > 1 && <Table dataSource={rawQuestionList} columns={tableColumns} />}
+        {questionList.length > 1 && TableElem}
       </div>
     </>
   )
