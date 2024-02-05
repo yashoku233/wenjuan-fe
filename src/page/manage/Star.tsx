@@ -3,6 +3,7 @@ import { useTitle } from 'ahooks'
 import { Typography, Empty } from 'antd'
 import styles from './common.module.scss'
 import QuestionCard from '../../components/QuestionCard'
+import ListSearch from '../../components/ListSearch'
 
 const rawQuestionList = [
   {
@@ -42,7 +43,9 @@ const Star: FC = () => {
         <div className={styles.left}>
           <Title level={3}>我的问卷</Title>
         </div>
-        <div className={styles.right}></div>
+        <div className={styles.right}>
+          <ListSearch />
+        </div>
       </div>
       <div className={styles.content}>
         {questionList.length === 1 && <Empty description="暂无问卷" />}
