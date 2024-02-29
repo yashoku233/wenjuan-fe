@@ -41,7 +41,25 @@ const Register: FC = () => {
           >
             <Input.Password />
           </Form.Item>
-          <Form.Item label="确认密码" name="confirom">
+          {/* dependencies是依赖项 */}
+          <Form.Item
+            label="确认密码"
+            name="confirom"
+            dependencies={['password']}
+            rules={[
+              { required: true, message: '请输入密码' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(
+                    new Error('The new password that you entered do not match!')
+                  )
+                },
+              }),
+            ]}
+          >
             <Input.Password />
           </Form.Item>
           <Form.Item label="昵称" name="nickname">

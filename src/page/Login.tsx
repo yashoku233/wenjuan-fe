@@ -1,11 +1,10 @@
 import React, { FC, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Typography, Space, Form, Input, Button, Checkbox } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 import { REGISTER_PATHNAME } from '../router'
 
 import styles from './Register.module.scss'
-import { get } from 'http'
 
 const { Title } = Typography
 
