@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 // import { useSearchParams } from 'react-router-dom'
 import { useTitle } from 'ahooks'
-import { Typography, Spin } from 'antd'
+import { Typography, Spin, Empty } from 'antd'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
@@ -13,7 +13,7 @@ const List: FC = () => {
   // const [questionList, setQuestionList] = useState([])
   // const [total, setTotal] = useState(0)
 
-  const { data = {}, loading } = useLoadQuestionListData()
+  const { data = {}, loading } = useLoadQuestionListData({})
   const { list = [], total = 0 } = data
   useEffect(() => {
     // async function fn() {
@@ -39,9 +39,8 @@ const List: FC = () => {
             <Spin></Spin>
           </div>
         )}
-        {/* {list.length === 0 && <Empty description="暂无问卷" />} */}
+        {!loading && list.length === 0 && <Empty description="暂无问卷" />}
         {list.length > 0 &&
-          !loading &&
           list.map((q: any) => {
             const { _id } = q
             return <QuestionCard key={_id} {...q} />
