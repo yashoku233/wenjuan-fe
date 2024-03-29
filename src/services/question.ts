@@ -4,6 +4,8 @@ type SearchOption = {
   keyword: string
   isStar: boolean
   isDeleted: boolean
+  page: number
+  pageSize: number
 }
 // 获取单个问卷信息
 export async function getQuestionService(id: string): Promise<ResDataType> {
@@ -23,7 +25,6 @@ export async function createQuestion(): Promise<ResDataType> {
 // Partial是TS中需要一部分
 export async function getQuestionList(opt: Partial<SearchOption>): Promise<ResDataType> {
   const url = `/api/question`
-  console.log(opt, 'opt')
   const data: ResDataType = await axios.get(url, { params: opt })
   return data
 }

@@ -5,6 +5,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import styles from './common.module.scss'
 import ListSearch from '../../components/ListSearch'
+import ListPage from '../../components/pageList'
 
 const { Title } = Typography
 const { confirm } = Modal
@@ -89,6 +90,9 @@ const Trash: FC = () => {
       <div className={styles.content}>
         {list.length === 0 && <Empty description="暂无问卷" />}
         {list.length > 1 && TableElem}
+      </div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
       </div>
     </>
   )

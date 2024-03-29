@@ -4,6 +4,7 @@ import { useTitle } from 'ahooks'
 import { Typography, Spin, Empty } from 'antd'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import QuestionCard from '../../components/QuestionCard'
+import ListPage from '../../components/pageList'
 import ListSearch from '../../components/ListSearch'
 import styles from './common.module.scss'
 
@@ -46,7 +47,9 @@ const List: FC = () => {
             return <QuestionCard key={_id} {...q} />
           })}
       </div>
-      <div className={styles.footer}>LoadMore... 上划加载更多...</div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
+      </div>
     </>
   )
 }
