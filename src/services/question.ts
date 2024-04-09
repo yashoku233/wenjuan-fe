@@ -35,6 +35,14 @@ export async function updateQuestionService(
   opt: { [key: string]: any }
 ): Promise<ResDataType> {
   const url = `/api/question/${id}`
-  const data = await axios.patch(url, opt)
+  const data: ResDataType = await axios.patch(url, opt)
+  return data
+}
+
+// 复制问卷
+
+export async function duplicateQuestionService(id: string) {
+  const url = `/api/question/duplicate/${id}`
+  const data: ResDataType = await axios.post(url)
   return data
 }
