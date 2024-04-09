@@ -1,7 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styles from './Questioncard.module.scss'
 import { useNavigate, Link } from 'react-router-dom'
 import { Button, Space, Divider, Tag, Popconfirm, Modal, message } from 'antd'
+import { useRequest } from 'ahooks'
+import { updateQuestionService } from '../services/question'
 import {
   EditOutlined,
   LineChartOutlined,
@@ -34,13 +36,27 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
     })
   }
   const { title, createdAt, isPublished, answerCount, _id, isStar } = props
+  const [isStarState, setIsStarState] = useState(isStar)
+
+  const { loading: changeStarLoading, run: changeStar } = useRequest(
+    async () => {
+      await updateQuestionService(_id, { isStar: !isStarState })
+    },
+    {
+      manual: true,
+      onSuccess() {
+        setIsStarState(!isStarState)
+        message.success('已设置')
+      },
+    }
+  )
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <div className={styles.left}>
           <Link to={isPublished ? `/question/stat/${_id}` : `/question/edit/${_id}`}>
             <Space>
-              {isStar && <StarOutlined style={{ color: 'red' }} />}
+              {isStarState && <StarOutlined style={{ color: 'red' }} />}
               {title}
             </Space>
           </Link>
@@ -85,8 +101,8 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
           </Space>
         </div>
         <div className={styles.right}>
-          <Button type="text" icon={<StarOutlined />} size="small">
-            {isStar ? '取消标星' : '标星'}
+          <Button type="text" icon={<StarOutlined />} size="small" onClick={changeStar}>
+            {isStarState ? '取消标星' : '标星'}
           </Button>
           <Popconfirm
             title="确定复制该问卷吗"
@@ -98,7 +114,6 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
               复制
             </Button>
           </Popconfirm>
-
           <Button type="text" icon={<DeleteOutlined />} size="small" onClick={del}>
             删除
           </Button>
