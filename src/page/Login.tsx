@@ -1,8 +1,12 @@
 import React, { FC, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Typography, Space, Form, Input, Button, Checkbox } from 'antd'
+import { Typography, Space, Form, Input, Button, Checkbox, message } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
-import { REGISTER_PATHNAME } from '../router'
+import { useNavigate } from 'react-router-dom'
+import { useRequest } from 'ahooks'
+import { loginService } from '../services/user'
+import { setToken } from '../utils/user-token'
+import { REGISTER_PATHNAME, MANAGE_INDEX_PATHNAME } from '../router'
 
 import styles from './Register.module.scss'
 
@@ -29,6 +33,7 @@ function getUserInfoFromStorage() {
 }
 
 const Login: FC = () => {
+  const nav = useNavigate()
   const [form] = Form.useForm() // 第三方hook
 
   useEffect(() => {
@@ -36,8 +41,22 @@ const Login: FC = () => {
     form.setFieldsValue({ username, password })
   }, [])
 
+  const { run } = useRequest(
+    async (username: string, password: string) => {
+      const data = await loginService(username, password)
+      return data
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('登陆成功')
+        nav(MANAGE_INDEX_PATHNAME)
+      },
+    }
+  )
   const onFinish = (values: any) => {
     const { username, password, remember } = values || {}
+    run(username, password)
     remember ? rememberUser(username, password) : deleteUserFromStorage()
   }
 
