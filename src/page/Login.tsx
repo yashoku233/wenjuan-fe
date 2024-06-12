@@ -48,7 +48,10 @@ const Login: FC = () => {
     },
     {
       manual: true,
-      onSuccess() {
+      onSuccess(result) {
+        console.log(result, 'result')
+        const { token = '' } = result
+        setToken(token) // 存储 token
         message.success('登陆成功')
         nav(MANAGE_INDEX_PATHNAME)
       },
