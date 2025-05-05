@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { useTitle } from 'ahooks'
 import { Typography, Empty, Spin } from 'antd'
 import styles from './common.module.scss'

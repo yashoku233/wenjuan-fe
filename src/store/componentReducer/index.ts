@@ -20,10 +20,10 @@ export const componentSlice = createSlice({
   name: 'componets',
   initialState: INIT_STATE,
   reducers: {
-  resetComponents : (state: ComponentsStateType, action:PayloadAction<ComponentsStateType>) =>{
-    return action.payload
-   }
-  }
+    resetComponents: (state: ComponentsStateType, action: PayloadAction<ComponentsStateType>) => {
+      return action.payload
+    },
+  },
 })
 
 export const { resetComponents } = componentSlice.actions
